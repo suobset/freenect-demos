@@ -1,4 +1,4 @@
-# Kinect blog demos
+# libfreenect demos
 
 I got an Xbox 360 Kinect from Salvation Army for $3 a while ago. Cool hardware!!
 
