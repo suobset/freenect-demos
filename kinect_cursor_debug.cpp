@@ -43,6 +43,8 @@ bool g_freeze_tracking = false;
 
 double g_smooth_x = 0.0;
 double g_smooth_y = 0.0;
+double g_filtered_norm_x = 0.5;
+double g_filtered_norm_y = 0.5;
 double g_screen_width = 0.0;
 double g_screen_height = 0.0;
 double g_tilt_angle = 0.0;
@@ -205,13 +207,13 @@ void RefreshTelemetry() {
 void DrawTexturedPane(GLuint texture, float left, float right, float bottom, float top) {
   glBindTexture(GL_TEXTURE_2D, texture);
   glBegin(GL_TRIANGLE_FAN);
-  glTexCoord2f(0.0f, 0.0f);
-  glVertex2f(left, bottom);
-  glTexCoord2f(1.0f, 0.0f);
-  glVertex2f(right, bottom);
-  glTexCoord2f(1.0f, 1.0f);
-  glVertex2f(right, top);
   glTexCoord2f(0.0f, 1.0f);
+  glVertex2f(left, bottom);
+  glTexCoord2f(1.0f, 1.0f);
+  glVertex2f(right, bottom);
+  glTexCoord2f(1.0f, 0.0f);
+  glVertex2f(right, top);
+  glTexCoord2f(0.0f, 0.0f);
   glVertex2f(left, top);
   glEnd();
 }
@@ -337,10 +339,19 @@ void UpdateFramesAndCursor() {
   if (g_cursor_enabled) {
     const double normalized_x = blog_demos::Clamp(g_last_blob.center_x / (kFrameWidth - 1.0), 0.0, 1.0);
     const double normalized_y = blog_demos::Clamp(g_last_blob.center_y / (kFrameHeight - 1.0), 0.0, 1.0);
-    const double target_x = normalized_x * g_screen_width;
-    const double target_y = normalized_y * g_screen_height;
-    g_smooth_x = blog_demos::Lerp(g_smooth_x, target_x, 0.18);
-    g_smooth_y = blog_demos::Lerp(g_smooth_y, target_y, 0.18);
+    g_filtered_norm_x = blog_demos::Lerp(g_filtered_norm_x, normalized_x, 0.10);
+    g_filtered_norm_y = blog_demos::Lerp(g_filtered_norm_y, normalized_y, 0.10);
+
+    const double centered_x = (g_filtered_norm_x - 0.5) * 0.7 + 0.5;
+    const double centered_y = (g_filtered_norm_y - 0.5) * 0.7 + 0.5;
+    const double target_x = blog_demos::Clamp(centered_x, 0.0, 1.0) * g_screen_width;
+    const double target_y = blog_demos::Clamp(centered_y, 0.0, 1.0) * g_screen_height;
+
+    const double max_step = 28.0;
+    const double delta_x = blog_demos::Clamp(target_x - g_smooth_x, -max_step, max_step);
+    const double delta_y = blog_demos::Clamp(target_y - g_smooth_y, -max_step, max_step);
+    g_smooth_x += delta_x;
+    g_smooth_y += delta_y;
 #ifdef __APPLE__
     CGWarpMouseCursorPosition(CGPointMake(g_smooth_x, g_smooth_y));
 #endif
