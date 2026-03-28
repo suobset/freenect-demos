@@ -1,8 +1,26 @@
 # Kinect blog demos
 
-These demos are deliberately small and slightly mischievous.
+I got an Xbox 360 Kinect from Salvation Army for $3 a while ago. Cool hardware!!
+
+These demos are deliberately small and slightly mischievous (if that's the right word).
+
+https://github.com/user-attachments/assets/861a2729-086f-4885-a1bf-c13652979904
 
 They do not install anything, do not rebuild the whole project, and do not try to compete with your Homebrew `libfreenect`. They reuse the C++ wrapper header in `wrappers/cpp/libfreenect.hpp` and link against the library you already have on the machine.
+
+## What's needed
+
+These demos use [libfreenect](https://github.com/OpenKinect/libfreenect). On macOS, I downloaded it from [Homebrew](https://brew.sh/)
+
+```
+brew install libfreenect
+```
+
+Python may seem like the easier way here, but 3.14 breaks a lot of dependencies. I also didn't want to fight with Python in general, and am way more comfortable with C++. This project requires CMake 3.16+ and C++ 17.
+
+Libfreenect gives IR/Camera/Accl/Mics access as a C++ library that you can then use for whatever. There's a Python wrapper, but it needs debugging. 
+
+<img width="1392" height="624" alt="Screenshot 2026-03-27 at 3 00 27 PM" src="https://github.com/user-attachments/assets/fd134c82-6c67-4436-8f26-c4f710aa039d" />
 
 ## What is here
 
@@ -45,3 +63,5 @@ cmake -S wrappers/cpp/blog_demos -B build-blog-demos \
 - For the cursor demos on macOS, you may need to grant Accessibility permissions to the terminal app that launches them.
 - The point cloud exporter writes plain ASCII PLY so you can open it in MeshLab, CloudCompare, or Blender.
 - If the cursor demo feels twitchy, stand farther back and keep only one hand in the active depth band.
+
+I'll be writing a blog post on this soon and attach it here.
