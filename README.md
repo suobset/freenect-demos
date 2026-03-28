@@ -8,6 +8,8 @@ https://github.com/user-attachments/assets/861a2729-086f-4885-a1bf-c13652979904
 
 They do not install anything, do not rebuild the whole project, and do not try to compete with your Homebrew `libfreenect`. They reuse the C++ wrapper header in `wrappers/cpp/libfreenect.hpp` and link against the library you already have on the machine.
 
+<img width="2880" height="2160" alt="image" src="https://github.com/user-attachments/assets/473cce0f-bceb-4d89-8ad3-1a0ad8d4d77e" />
+
 ## What's needed
 
 These demos use [libfreenect](https://github.com/OpenKinect/libfreenect). On macOS, I downloaded it from [Homebrew](https://brew.sh/)
