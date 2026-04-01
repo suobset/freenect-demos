@@ -24,6 +24,8 @@ Libfreenect gives IR/Camera/Accl/Mics access as a C++ library that you can then 
 
 <img width="1392" height="624" alt="Screenshot 2026-03-27 at 3 00 27 PM" src="https://github.com/user-attachments/assets/fd134c82-6c67-4436-8f26-c4f710aa039d" />
 
+https://github.com/user-attachments/assets/87d2295c-0cb3-4de6-b041-c6bf803fd4b5
+
 ## What is here
 
 - `kinect_cursor`: tracks the closest blob in the depth frame, moves the macOS cursor, and supports a depth-based air-tap click.
